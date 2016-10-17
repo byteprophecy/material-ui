@@ -349,7 +349,7 @@ class AppBar extends Component {
     }
     if(showSearchIcon){
 
-        searchIcon = (<div style={{"width":"100%","position":"relative"}}>
+        searchIcon = (<div style={{"position":"relative"}}>
         <i className="material-icons" onClick={this.toggleTextField} style={this.props.searchIconStyle} >search</i>
         </div>
       )
