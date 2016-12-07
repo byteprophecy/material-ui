@@ -8,6 +8,10 @@ import CalendarYear from './CalendarYear';
 import CalendarToolbar from './CalendarToolbar';
 import DateDisplay from './DateDisplay';
 import SlideInTransitionGroup from '../internal/SlideIn';
+import {
+  RadioButton,
+  RadioButtonGroup
+} from '../RadioButton';
 
 import {
   addDays,
@@ -220,6 +224,13 @@ class Calendar extends Component {
     }
   };
 
+  selectCompareValue = (event,value) =>{
+    this.setState({
+      selectedCompareValue: value
+    },function(){
+      this.props.selectCompareValue(value);
+    });
+  }
   yearSelector() {
     if (!this.props.disableYearSelection) {
       return (
@@ -353,6 +364,29 @@ class Calendar extends Component {
                 />
               </SlideInTransitionGroup>
             </div>
+          }
+          {this.props.hasCompareDate ?
+            <div style={{fontSize:'18px',fontFamily:'Bariol-Light',
+            'marginLeft':'15px'}}>
+              Compare With
+              <RadioButtonGroup  name={"comparedToRadio"}
+                valueSelected={this.state.selectedCompareValue}
+                 defaultSelected={'previous_day'}
+                 onChange={this.selectCompareValue} >
+
+                 <RadioButton
+                      value={'previous_day'}
+                      label={'Previous day'}
+                      labelStyle={{fontFamily: 'Bariol-Light',fontSize: '18px'}} />
+
+                  <RadioButton
+                      value={'same_day_last_month'}
+                      label={'Same day past month'}
+                      labelStyle={{fontFamily: 'Bariol-Light',fontSize: '18px'}} />
+
+              </RadioButtonGroup>
+            </div>
+            :null
           }
           {!this.state.displayMonthDay &&
             <div style={prepareStyles(styles.yearContainer)}>

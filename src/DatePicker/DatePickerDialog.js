@@ -173,6 +173,8 @@ class DatePickerDialog extends Component {
             onTouchTapOk={this.handleTouchTapOk}
             okLabel={okLabel}
             shouldDisableDate={shouldDisableDate}
+            selectCompareValue = {this.props.selectCompareValue}
+            hasCompareDate = {this.props.hasCompareDate}
           />
         </Container>
       </div>

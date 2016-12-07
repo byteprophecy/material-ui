@@ -150,6 +150,7 @@ class DatePicker extends Component {
 
   state = {
     date: undefined,
+    selectedCompareValue: 'previous_day'
   };
 
   componentWillMount() {
@@ -207,7 +208,7 @@ class DatePicker extends Component {
       });
     }
     if (this.props.onChange) {
-      this.props.onChange(null, date);
+      this.props.onChange(null, date,this.state.selectedCompareValue);
     }
   };
 
@@ -238,6 +239,12 @@ class DatePicker extends Component {
     if (props.value instanceof Date) {
       return props.value;
     }
+  }
+
+  selectCompareValue = (value) =>{
+    this.setState({
+      selectedCompareValue: value
+    });
   }
 
   formatDate = (date) => {
@@ -312,6 +319,8 @@ class DatePicker extends Component {
           onDismiss={onDismiss}
           ref="dialogWindow"
           shouldDisableDate={shouldDisableDate}
+          selectCompareValue ={this.selectCompareValue}
+          hasCompareDate = {this.props.hasCompareDate}
         />
       </div>
     );
@@ -319,3 +328,6 @@ class DatePicker extends Component {
 }
 
 export default DatePicker;
+/*
+selectCompare={this.props.showCompare? this.props.selectCompareValue:null
+*/

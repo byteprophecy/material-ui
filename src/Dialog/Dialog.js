@@ -38,7 +38,7 @@ class TransitionItem extends Component {
     this.setState({
       style: {
         opacity: 1,
-        transform: `translate(0, ${spacing.desktopKeylineIncrement}px)`,
+        // transform: `translate(0, ${spacing.desktopKeylineIncrement}px)`,
       },
     });
 
@@ -230,7 +230,9 @@ class DialogInline extends Component {
       if (React.Children.count(actions)) {
         maxDialogContentHeight -= dialogContent.nextSibling.offsetHeight;
       }
-
+      if(maxDialogContentHeight < 520){
+        maxDialogContentHeight = 520;
+      }
       dialogContent.style.maxHeight = `${maxDialogContentHeight}px`;
     }
   }

@@ -278,8 +278,8 @@ class TextField extends Component {
       hasValue: isValid(propsLeaf.value) || isValid(propsLeaf.defaultValue),
     });
 
-    warning(name || hintText || floatingLabelText || id, `We don't have enough information
-      to build a robust unique id for the TextField component. Please provide an id or a name.`);
+    warning(name || hintText || floatingLabelText || id, 'We don\'t have enough information' +
+      'to build a robust unique id for the TextField component. Please provide an id or a name.');
 
     const uniqueId = `${name}-${hintText}-${floatingLabelText}-${
       Math.floor(Math.random() * 0xFFFF)}`;
