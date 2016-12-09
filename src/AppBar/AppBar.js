@@ -339,7 +339,7 @@ class AppBar extends Component {
     if(showSearchInput){
     searchInput = (
   	    		<div style={{"width":"100%","position":"relative"}}>
-  	    		 {this.props.showTextField ? <AutoComplete dataSource={this.props.dataSource} hintText={this.props.searchHintText}  underlineStyle={this.props.searchUnderlineStyle}
+  	    		 {this.props.showTextField ? <AutoComplete dataSourceConfig={this.props.dataSourceConfig} filter={this.props.filter} dataSource={this.props.dataSource} hintText={this.props.searchHintText}  underlineStyle={this.props.searchUnderlineStyle}
               hintStyle={this.props.hintStyle} clearInput={this.state.clearText}   textFieldStyle={this.props.textFieldStyle} inputStyle={this.props.inputStyle} onNewRequest={this.props.onNewRequest} /> : null}
 
   	    		{ !this.props.showTextField ? <i className="material-icons" onClick={this.toggleTextField} style={this.props.searchIconStyle} >search</i>  :
