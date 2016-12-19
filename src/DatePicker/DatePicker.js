@@ -321,6 +321,7 @@ class DatePicker extends Component {
           shouldDisableDate={shouldDisableDate}
           selectCompareValue ={this.selectCompareValue}
           hasCompareDate = {this.props.hasCompareDate}
+          compareValues = {this.props.compareValues}
         />
       </div>
     );
