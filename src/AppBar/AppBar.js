@@ -65,7 +65,7 @@ export function getStyles(props, context) {
 class AppBar extends Component {
   constructor(props) {
   super(props);
-  this.state = {clearText : false };
+  this.state = {clearText : false,showNotification: false };
 
 }
   static muiName = 'AppBar';
@@ -146,6 +146,7 @@ class AppBar extends Component {
      * The shadow of the app bar is also dependent on this property.
      */
     zDepth: propTypes.zDepth
+
   };
 
   static defaultProps = {
@@ -154,6 +155,7 @@ class AppBar extends Component {
     zDepth: 1,
     showSearchInput : false,
     showSearchIcon : false,
+    showNotificationBell: false,
     searchHintStyle : propTypes.searchHintStyle,
     searchUnderlineStyle : propTypes.searchUnderlineStyle,
     searchUnderlineFocusStyle : propTypes.searchUnderlineFocusStyle
@@ -189,10 +191,15 @@ class AppBar extends Component {
     }
   };
   toggleTextField = () => {
-  this.props.getStatus(!this.props.showTextField)
+    this.props.getStatus(!this.props.showTextField)
+  }
+  toggleNotification = () => {
+    this.props.showNotificationTab(!this.state.showNotification);
+    this.setState({
+      showNotification: !this.state.showNotification
+    });
 
   }
-
   onCancel = () => {
     this.setState({
       clearText : true
@@ -221,6 +228,7 @@ class AppBar extends Component {
       zDepth,
       children,
       showSearchInput,
+      showNotificationBell,
       showSearchIcon,
       ...other,
     } = this.props;
@@ -232,6 +240,7 @@ class AppBar extends Component {
     let menuElementRight;
     let searchInput;
     let searchIcon;
+    let notificationIcon;
 
     // If the title is a string, wrap in an h1 tag.
     // If not, wrap in a div tag.
@@ -355,6 +364,12 @@ class AppBar extends Component {
       )
 
     }
+    if(showNotificationBell){
+
+      notificationIcon = (<div style={{position:'relative'}}>
+        <i className="material-icons" onClick={this.toggleNotification} style={{position: 'absolute',bottom: '20px',color: '#FFF',right: '30px'}}>notifications_none</i>
+        </div>)
+    }
     return (
       <Paper
         {...other}
@@ -367,6 +382,7 @@ class AppBar extends Component {
         {titleElement}
         {searchInput}
         {searchIcon}
+        {notificationIcon}
         {menuElementRight}
         {children}
       </Paper>
