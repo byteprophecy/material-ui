@@ -373,17 +373,12 @@ class Calendar extends Component {
                 valueSelected={this.state.selectedCompareValue}
                  defaultSelected={'previous_day'}
                  onChange={this.selectCompareValue} >
-
-                 <RadioButton
-                      value={'previous_day'}
-                      label={'Previous day'}
-                      labelStyle={{fontFamily: 'Bariol-Light',fontSize: '18px'}} />
-
-                  <RadioButton
-                      value={'same_day_last_month'}
-                      label={'Same day past month'}
-                      labelStyle={{fontFamily: 'Bariol-Light',fontSize: '18px'}} />
-
+                 {
+                  this.props.compareValues.map(function(item){
+                    return ( <RadioButton value={item.value} label={item.label}
+                          labelStyle={{fontFamily:'Bariol',fontSize:'16px'}} /> )
+                  })
+                 }
               </RadioButtonGroup>
             </div>
             :null
