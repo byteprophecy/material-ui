@@ -366,7 +366,7 @@ class AppBar extends Component {
     }
     if(showNotificationBell){
 
-      notificationIcon = (<div style={{position:'relative'}}>
+      notificationIcon = (<div style={{position:'relative',cursor:'pointer'}}>
         <i className="material-icons" onClick={this.toggleNotification} style={{position: 'absolute',bottom: '20px',color: '#FFF',right: '30px'}}>notifications_none</i>
         </div>)
     }
