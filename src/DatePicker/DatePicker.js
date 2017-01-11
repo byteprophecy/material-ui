@@ -150,7 +150,7 @@ class DatePicker extends Component {
 
   state = {
     date: undefined,
-    selectedCompareValue: 'previous_day'
+    selectedCompareValue: undefined
   };
 
   componentWillMount() {
@@ -208,7 +208,14 @@ class DatePicker extends Component {
       });
     }
     if (this.props.onChange) {
-      this.props.onChange(null, date,this.state.selectedCompareValue);
+      var selectedCompareValue = this.state.selectedCompareValue;
+      if(!selectedCompareValue){
+        selectedCompareValue = this.props.compareValues[0].value;
+      }
+      this.setState({selectedCompareValue:selectedCompareValue},function(){
+        this.props.onChange(null, date,this.state.selectedCompareValue);
+      });
+
     }
   };
 
