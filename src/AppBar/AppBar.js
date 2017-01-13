@@ -152,6 +152,7 @@ class AppBar extends Component {
   static defaultProps = {
     showMenuIconButton: true,
     title: '',
+    notificationCount: 0,
     zDepth: 1,
     showSearchInput : false,
     showSearchIcon : false,
@@ -365,10 +366,16 @@ class AppBar extends Component {
 
     }
     if(showNotificationBell){
-
-      notificationIcon = (<div style={{position:'relative',cursor:'pointer'}}>
-        <i className="material-icons" onClick={this.toggleNotification} style={{position: 'absolute',bottom: '20px',color: '#FFF',right: '30px'}}>notifications_none</i>
-        </div>)
+      notificationIcon = (
+        <div style={{position:'relative',cursor:'pointer'}} onClick={this.toggleNotification} >
+          <i className="material-icons"  style={{position: 'absolute',bottom: '18px',color: '#FFF',right: '53px',fontSize:'28px'}}>notifications_none</i>
+          {this.props.notificationCount?
+            <span style={{position: 'absolute',right: '45px',top: '11px',background: '#FFF',width: '24px',height: '24px',fontWeight: 'bold',borderRadius: '50%',zIndex:'20',textAlign: 'center',justifyContent:'center',alignContent:'center',display:'flex',flexFlow:'row wrap',alignItems:'center',fontSize:'12px'}}>
+              {this.props.notificationCount}
+            </span>
+            : null}
+        </div>
+        )
     }
     return (
       <Paper
