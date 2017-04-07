@@ -58,6 +58,14 @@ class Chip extends Component {
      */
     className: PropTypes.node,
     /**
+     * The element to use as the container for the Chip. Either a string to
+     * use a DOM element or a ReactElement.
+     */
+    containerElement: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element,
+    ]),
+    /**
      * Override the label color.
      */
     labelColor: PropTypes.string,
@@ -103,6 +111,7 @@ class Chip extends Component {
   };
 
   static defaultProps = {
+    containerElement: 'div', // Firefox doesn't support nested buttons
     onBlur: () => {},
     onFocus: () => {},
     onKeyDown: () => {},
@@ -234,27 +243,28 @@ class Chip extends Component {
 
     const {
       children: childrenProp,
+      containerElement,
       style,
       className,
       labelStyle,
       labelColor, // eslint-disable-line no-unused-vars,prefer-const
       backgroundColor, // eslint-disable-line no-unused-vars,prefer-const
       onRequestDelete, // eslint-disable-line no-unused-vars,prefer-const
-      ...other,
+      ...other
     } = this.props;
 
     const deletable = this.props.onRequestDelete;
     let avatar = null;
 
-    const deleteIcon = deletable ?
+    const deleteIcon = deletable ? (
       <DeleteIcon
         color={styles.deleteIcon.color}
         style={styles.deleteIcon}
         onTouchTap={this.handleTouchTapDeleteIcon}
         onMouseEnter={this.handleMouseEnterDeleteIcon}
         onMouseLeave={this.handleMouseLeaveDeleteIcon}
-      /> :
-      null;
+      />
+    ) : null;
 
     let children = childrenProp;
     const childCount = React.Children.count(children);
@@ -278,7 +288,7 @@ class Chip extends Component {
         {...other}
         {...buttonEventHandlers}
         className={className}
-        containerElement="div" // Firefox doesn't support nested buttons
+        containerElement={containerElement}
         disableTouchRipple={true}
         disableFocusRipple={true}
         style={Object.assign(styles.root, style)}

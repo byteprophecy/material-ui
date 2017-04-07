@@ -66,6 +66,10 @@ class DatePicker extends Component {
      */
     formatDate: PropTypes.func,
     /**
+     * Hide date display
+     */
+    hideCalendarDate: PropTypes.bool,
+    /**
      * Locale used for formatting the `DatePicker` date strings. Other than for 'en-US', you
      * must provide a `DateTimeFormat` that supports the chosen `locale`.
      */
@@ -141,6 +145,7 @@ class DatePicker extends Component {
     disabled: false,
     disableYearSelection: false,
     firstDayOfWeek: 1,
+    hideCalendarDate: false,
     style: {},
   };
 
@@ -289,9 +294,10 @@ class DatePicker extends Component {
       onShow,
       onTouchTap, // eslint-disable-line no-unused-vars
       shouldDisableDate,
+      hideCalendarDate,
       style,
       textFieldStyle,
-      ...other,
+      ...other
     } = this.props;
 
     const {prepareStyles} = this.context.muiTheme;
@@ -329,6 +335,7 @@ class DatePicker extends Component {
           selectCompareValue ={this.selectCompareValue}
           hasCompareDate = {this.props.hasCompareDate}
           compareValues = {this.props.compareValues}
+          hideCalendarDate={hideCalendarDate}
         />
       </div>
     );

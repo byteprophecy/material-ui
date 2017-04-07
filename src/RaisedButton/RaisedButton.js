@@ -18,6 +18,7 @@ function getStyles(props, context, state) {
     baseTheme,
     button,
     raisedButton,
+    borderRadius,
   } = context.muiTheme;
 
   const {
@@ -57,7 +58,6 @@ function getStyles(props, context, state) {
   }
 
   const buttonHeight = style && style.height || button.height;
-  const borderRadius = 2;
 
   return {
     root: {
@@ -66,12 +66,11 @@ function getStyles(props, context, state) {
       minWidth: fullWidth ? '100%' : button.minWidth,
     },
     button: {
-      position: 'relative',
       height: buttonHeight,
       lineHeight: `${buttonHeight}px`,
       width: '100%',
       padding: 0,
-      borderRadius: borderRadius,
+      borderRadius,
       transition: transitions.easeOut(),
       backgroundColor: backgroundColor,
       // That's the default value for a button but not a link
@@ -97,7 +96,7 @@ function getStyles(props, context, state) {
     },
     overlay: {
       height: buttonHeight,
-      borderRadius: borderRadius,
+      borderRadius,
       backgroundColor: (state.keyboardFocused || state.hovered) && !disabled &&
         fade(labelColor, amount),
       transition: transitions.easeOut(),
@@ -134,6 +133,21 @@ class RaisedButton extends Component {
      * The CSS class name of the root element.
      */
     className: PropTypes.string,
+    /**
+      * The element to use as the container for the RaisedButton. Either a string to
+      * use a DOM element or a ReactElement. This is useful for wrapping the
+      * RaisedButton in a custom Link component. If a ReactElement is given, ensure
+      * that it passes all of its given props through to the underlying DOM
+      * element and renders its children prop for proper integration.
+      */
+    containerElement: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element,
+    ]),
+    /**
+     * If true, the element's ripple effect will be disabled.
+     */
+    disableTouchRipple: React.PropTypes.bool,
     /**
      * If true, the button will be disabled.
      */
@@ -192,6 +206,16 @@ class RaisedButton extends Component {
     onTouchEnd: PropTypes.func,
     /** @ignore */
     onTouchStart: PropTypes.func,
+    /**
+     * Callback function fired when the button is touch-tapped.
+     *
+     * @param {object} event TouchTap event targeting the button.
+     */
+    onTouchTap: PropTypes.func,
+    /**
+     * Override the inline style of the button overlay.
+     */
+    overlayStyle: PropTypes.object,
     /**
      * If true, the button will use the theme's primary color.
      */
@@ -311,6 +335,7 @@ class RaisedButton extends Component {
 
   handleTouchEnd = (event) => {
     this.setState({
+      touched: true,
       zDepth: this.state.initialZDepth,
     });
 
@@ -343,11 +368,12 @@ class RaisedButton extends Component {
       labelColor, // eslint-disable-line no-unused-vars
       labelPosition,
       labelStyle,
+      overlayStyle,
       primary, // eslint-disable-line no-unused-vars
       rippleStyle,
       secondary, // eslint-disable-line no-unused-vars
       style,
-      ...other,
+      ...other
     } = this.props;
 
     const {prepareStyles} = this.context.muiTheme;
@@ -408,7 +434,7 @@ class RaisedButton extends Component {
         >
           <div
             ref="overlay"
-            style={prepareStyles(styles.overlay)}
+            style={prepareStyles(Object.assign(styles.overlay, overlayStyle))}
           >
             {enhancedButtonChildren}
           </div>

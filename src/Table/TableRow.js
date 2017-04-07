@@ -40,7 +40,7 @@ class TableRow extends Component {
      */
     displayBorder: PropTypes.bool,
     /**
-     * Controls whether or not the row reponseds to hover events.
+     * Controls whether or not the row responds to hover events.
      */
     hoverable: PropTypes.bool,
     /**
@@ -184,7 +184,7 @@ class TableRow extends Component {
       selected, // eslint-disable-line no-unused-vars
       striped, // eslint-disable-line no-unused-vars
       style,
-      ...other,
+      ...other
     } = this.props;
 
     const {prepareStyles} = this.context.muiTheme;

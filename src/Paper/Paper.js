@@ -13,6 +13,7 @@ function getStyles(props, context) {
   const {
     baseTheme,
     paper,
+    borderRadius,
   } = context.muiTheme;
 
   return {
@@ -24,7 +25,7 @@ function getStyles(props, context) {
       fontFamily: baseTheme.fontFamily,
       WebkitTapHighlightColor: 'rgba(0,0,0,0)', // Remove mobile color flashing (deprecated)
       boxShadow: paper.zDepthShadows[zDepth - 1], // No shadow for 0 depth papers
-      borderRadius: circle ? '50%' : rounded ? '2px' : '0px',
+      borderRadius: circle ? '50%' : rounded ? borderRadius : '0px',
     },
   };
 }
@@ -77,7 +78,7 @@ class Paper extends Component {
       style,
       transitionEnabled, // eslint-disable-line no-unused-vars
       zDepth, // eslint-disable-line no-unused-vars
-      ...other,
+      ...other
     } = this.props;
 
     const {prepareStyles} = this.context.muiTheme;
