@@ -5,6 +5,7 @@ import Popover from '../Popover/Popover';
 import CheckIcon from '../svg-icons/navigation/check';
 import ListItem from '../List/ListItem';
 import Menu from '../Menu/Menu';
+import propTypes from '../utils/propTypes';
 
 const nestedMenuStyle = {
   position: 'relative',
@@ -13,21 +14,22 @@ const nestedMenuStyle = {
 function getStyles(props, context) {
   const disabledColor = context.muiTheme.baseTheme.palette.disabledColor;
   const textColor = context.muiTheme.baseTheme.palette.textColor;
-  const leftIndent = props.desktop ? 64 : 72;
+  const indent = props.desktop ? 64 : 72;
   const sidePadding = props.desktop ? 24 : 16;
 
   const styles = {
     root: {
       color: props.disabled ? disabledColor : textColor,
       cursor: props.disabled ? 'not-allowed' : 'pointer',
+      minHeight: props.desktop ? '32px' : '48px',
       lineHeight: props.desktop ? '32px' : '48px',
       fontSize: props.desktop ? 15 : 16,
       whiteSpace: 'nowrap',
     },
 
     innerDivStyle: {
-      paddingLeft: props.leftIcon || props.insetChildren || props.checked ? leftIndent : sidePadding,
-      paddingRight: sidePadding,
+      paddingLeft: props.leftIcon || props.insetChildren || props.checked ? indent : sidePadding,
+      paddingRight: props.rightIcon ? indent : sidePadding,
       paddingBottom: 0,
       paddingTop: 0,
     },
@@ -57,6 +59,11 @@ class MenuItem extends Component {
   static muiName = 'MenuItem';
 
   static propTypes = {
+    /**
+     * Location of the anchor for the popover of nested `MenuItem`
+     * elements.
+     */
+    anchorOrigin: propTypes.origin,
     /**
      * Override the default animation component used.
      */
@@ -134,6 +141,7 @@ class MenuItem extends Component {
   };
 
   static defaultProps = {
+    anchorOrigin: {horizontal: 'right', vertical: 'top'},
     checked: false,
     desktop: false,
     disabled: false,
@@ -232,8 +240,9 @@ class MenuItem extends Component {
       secondaryText,
       style,
       animation,
+      anchorOrigin,
       value, // eslint-disable-line no-unused-vars
-      ...other,
+      ...other
     } = this.props;
 
     const {prepareStyles} = this.context.muiTheme;
@@ -273,7 +282,7 @@ class MenuItem extends Component {
       childMenuPopover = (
         <Popover
           animation={animation}
-          anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+          anchorOrigin={anchorOrigin}
           anchorEl={this.state.anchorEl}
           open={this.state.open}
           useLayerForClickAway={false}
@@ -291,6 +300,7 @@ class MenuItem extends Component {
       <ListItem
         {...other}
         disabled={disabled}
+        hoverColor={this.context.muiTheme.menuItem.hoverColor}
         innerDivStyle={mergedInnerDivStyles}
         insetChildren={insetChildren}
         leftIcon={leftIconElement}
