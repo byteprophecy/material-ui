@@ -173,6 +173,12 @@ class DatePicker extends Component {
         });
       }
     }
+
+    if(!this.state.changeHour){
+      this.setState({
+        currentHour: this.props.currentHour || nextProps.currentHour
+      });
+    }
   }
 
   getDate() {
@@ -190,7 +196,7 @@ class DatePicker extends Component {
      */
     if (this.state.date !== undefined) {
       this.setState({
-        dialogDate: this.getDate(),
+        dialogDate: this.getDate()
       }, this.refs.dialogWindow.show);
     } else {
       this.setState({
@@ -215,7 +221,14 @@ class DatePicker extends Component {
     if (this.props.onChange) {
       var selectedCompareValue = this.state.selectedCompareValue;
       if(!selectedCompareValue){
-        selectedCompareValue = this.props.compareValues[0].value;
+        if(this.props.compareValues==undefined){
+          selectedCompareValue = null;
+        }
+        if(this.props.compareValues.length==0){
+          selectedCompareValue = null;
+        } else {
+          selectedCompareValue = this.this.props.compareValues[0].value;
+        }
       }
       this.setState({selectedCompareValue:selectedCompareValue},function(){
         this.props.onChange(null, date,this.state.selectedCompareValue,this.state.currentHour);

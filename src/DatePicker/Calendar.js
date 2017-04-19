@@ -26,12 +26,41 @@ import {
   monthDiff,
 } from './dateUtils';
 
+
+const hoursString = 
+['12:00 AM - 01:00 AM',
+ '01:00 AM - 02:00 AM',
+ '02:00 AM - 03:00 AM',
+ '03:00 AM - 04:00 AM',
+ '04:00 AM - 05:00 AM',
+ '05:00 AM - 06:00 AM',
+ '06:00 AM - 07:00 AM',
+ '07:00 AM - 08:00 AM',
+ '08:00 AM - 09:00 AM',
+ '09:00 AM - 10:00 AM',
+ '10:00 AM - 11:00 AM',
+ '11:00 AM - 12:00 PM',
+    // After Noon 
+ '12:00 PM - 01:00 PM',
+ '01:00 PM - 02:00 PM',
+ '02:00 PM - 03:00 AM',
+ '03:00 PM - 04:00 PM',
+ '04:00 PM - 05:00 PM',
+ '05:00 PM - 06:00 PM',
+ '06:00 PM - 07:00 PM',
+ '07:00 PM - 08:00 PM',
+ '08:00 PM - 09:00 PM',
+ '09:00 PM - 10:00 PM',
+ '10:00 PM - 11:00 PM',
+ '11:00 PM - 12:00 PM',
+];
+
 const daysArray = [...Array(7)];
 const hours = [...Array(24)];
 hours.forEach((item,index)=>{
   hours[index] = {};
   hours[index].key = index;
-  hours[index].value = index;
+  hours[index].value = hoursString[index];
 });
 
 class Calendar extends Component {
@@ -244,6 +273,7 @@ class Calendar extends Component {
     this.setState({
       currentHour: event.target.value
     },function(){
+        debugger;
         this.props.changeHour(this.state.currentHour);
     });
   }
@@ -251,7 +281,7 @@ class Calendar extends Component {
     if (!this.props.disableYearSelection) {
       return (
         <CalendarYear
-          key="years"
+          key='years'
           DateTimeFormat={this.props.DateTimeFormat}
           locale={this.props.locale}
           onTouchTapYear={this.handleTouchTapYear}
@@ -334,7 +364,7 @@ class Calendar extends Component {
     return (
       <div style={prepareStyles(styles.root)}>
         <EventListener
-          target="window"
+          target='window'
           onKeyDown={this.handleWindowKeyDown}
         />
   {!hideCalendarDate &&
@@ -349,7 +379,7 @@ class Calendar extends Component {
           selectedDate={this.state.selectedDate}
         />
 }
-        <div style={prepareStyles(styles.calendar)} className="CalendarSelectionClass">
+        <div style={prepareStyles(styles.calendar)} className='CalendarSelectionClass'>
           {this.state.displayMonthDay &&
             <div style={prepareStyles(styles.calendarContainer)}>
               <CalendarToolbar
@@ -377,7 +407,7 @@ class Calendar extends Component {
                   minDate={minDate}
                   maxDate={maxDate}
                   onTouchTapDay={this.handleTouchTapDay}
-                  ref="calendar"
+                  ref='calendar'
                   selectedDate={this.state.selectedDate}
                   shouldDisableDate={this.props.shouldDisableDate}
                 />
@@ -389,16 +419,16 @@ class Calendar extends Component {
             'marginLeft':'15px'}}>
               <div style={{float:'left',width:'30%'}}>Hours: </div>
               <div  style={{float:'left',width:'70%'}}>
-                <select  name={"timeSelector"} onChange={this.changeHour} style={{marginLeft:'10px'}}>
+                <select  name={'timeSelector'} onChange={this.changeHour} style={{marginLeft:'10px'}}>
                     {
-                      this.state.hours.map((value,index) => {
+                      this.state.hours.map((item,index) => {
                         return(
-                          this.props.currentHour == value.key ?
-                          <option key={index} value={value.key} selected>
-                            {value.key}
+                          this.props.currentHour == item.key ?
+                          <option key={index} value={item.key} selected>
+                            {item.value}
                           </option>:
-                        <option key={index} value={value.key}>
-                          {value.key}
+                        <option key={index} value={item.key}>
+                          {item.value}
                         </option>
                         );
                       })
@@ -412,7 +442,7 @@ class Calendar extends Component {
             'marginLeft':'15px'}}>
               <div style={{float:'left',width:'30%'}}>Compare With:</div>
               <div  style={{float:'left',width:'70%'}}>
-                <select  name={"comparedToRadio"} style={{marginLeft:'10px'}}
+                <select  name={'comparedToRadio'} style={{marginLeft:'10px'}}
                    onChange={this.selectCompareValue} >
                    {
                     this.props.compareValues.map((item) => {
