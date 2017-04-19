@@ -218,9 +218,8 @@ class DatePicker extends Component {
         selectedCompareValue = this.props.compareValues[0].value;
       }
       this.setState({selectedCompareValue:selectedCompareValue},function(){
-        this.props.onChange(null, date,this.state.selectedCompareValue);
+        this.props.onChange(null, date,this.state.selectedCompareValue,this.state.currentHour);
       });
-
     }
   };
 
@@ -256,6 +255,11 @@ class DatePicker extends Component {
   selectCompareValue = (value) =>{
     this.setState({
       selectedCompareValue: value
+    });
+  }
+  changeHour = (value) =>{
+    this.setState({
+      currentHour: value
     });
   }
 
@@ -333,9 +337,12 @@ class DatePicker extends Component {
           ref="dialogWindow"
           shouldDisableDate={shouldDisableDate}
           selectCompareValue ={this.selectCompareValue}
+          changeHour = {this.changeHour}
           hasCompareDate = {this.props.hasCompareDate}
           compareValues = {this.props.compareValues}
           hideCalendarDate={hideCalendarDate}
+          granularity = {this.props.granularity}
+          currentHour = {this.props.currentHour || 0}
         />
       </div>
     );

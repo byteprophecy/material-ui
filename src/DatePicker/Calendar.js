@@ -27,6 +27,12 @@ import {
 } from './dateUtils';
 
 const daysArray = [...Array(7)];
+const hours = [...Array(24)];
+hours.forEach((item,index)=>{
+  hours[index] = {};
+  hours[index].key = index;
+  hours[index].value = index;
+});
 
 class Calendar extends Component {
   static propTypes = {
@@ -68,6 +74,7 @@ class Calendar extends Component {
     selectedDate: undefined,
     transitionDirection: 'left',
     transitionEnter: true,
+    hours:hours
   };
 
   componentWillMount() {
@@ -226,11 +233,18 @@ class Calendar extends Component {
     }
   };
 
-  selectCompareValue = (event,value) =>{
+  selectCompareValue = (event) =>{
     this.setState({
-      selectedCompareValue: value
+      selectedCompareValue: event.target.value
     },function(){
-      this.props.selectCompareValue(value);
+      this.props.selectCompareValue(this.state.selectedCompareValue);
+    });
+  }
+  changeHour = (event) =>{
+    this.setState({
+      currentHour: event.target.value
+    },function(){
+        this.props.changeHour(this.state.currentHour);
     });
   }
   yearSelector() {
@@ -370,23 +384,50 @@ class Calendar extends Component {
               </SlideInTransitionGroup>
             </div>
           }
-          {this.props.hasCompareDate ?
+          { this.props.granularity == 'Hourly' &&
             <div style={{fontSize:'18px',fontFamily:'Bariol-Light',
             'marginLeft':'15px'}}>
-              Compare With
-              <RadioButtonGroup  name={"comparedToRadio"}
-                valueSelected={this.state.selectedCompareValue}
-                 defaultSelected={'previous_day'}
-                 onChange={this.selectCompareValue} >
-                 {
-                  this.props.compareValues.map(function(item){
-                    return ( <RadioButton value={item.value} label={item.label}
-                          labelStyle={{fontFamily:'Bariol',fontSize:'16px'}} /> )
-                  })
-                 }
-              </RadioButtonGroup>
+              <div style={{float:'left',width:'30%'}}>Hours: </div>
+              <div  style={{float:'left',width:'70%'}}>
+                <select  name={"timeSelector"} onChange={this.changeHour} style={{marginLeft:'10px'}}>
+                    {
+                      this.state.hours.map((value,index) => {
+                        return(
+                          this.props.currentHour == value.key ?
+                          <option key={index} value={value.key} selected>
+                            {value.key}
+                          </option>:
+                        <option key={index} value={value.key}>
+                          {value.key}
+                        </option>
+                        );
+                      })
+                    }
+                  </select>
+                </div>
+              </div>
+          }
+          {this.props.hasCompareDate &&
+            <div style={{fontSize:'18px',fontFamily:'Bariol-Light',
+            'marginLeft':'15px'}}>
+              <div style={{float:'left',width:'30%'}}>Compare With:</div>
+              <div  style={{float:'left',width:'70%'}}>
+                <select  name={"comparedToRadio"} style={{marginLeft:'10px'}}
+                   onChange={this.selectCompareValue} >
+                   {
+                    this.props.compareValues.map((item) => {
+                      return (
+                        this.state.selectedCompareValue == item.value ?
+                        <option value={item.value} label={item.label} selected
+                            labelStyle={{fontFamily:'Bariol',fontSize:'16px'}} /> :
+                         <option value={item.value} label={item.label}
+                            labelStyle={{fontFamily:'Bariol',fontSize:'16px'}} />
+                         )
+                    })
+                   }
+                </select>
+              </div>
             </div>
-            :null
           }
           {!this.state.displayMonthDay &&
             <div style={prepareStyles(styles.yearContainer)}>
@@ -409,3 +450,9 @@ class Calendar extends Component {
 }
 
 export default Calendar;
+{
+  /*
+  valueSelected={this.state.selectedCompareValue}
+   defaultSelected={'previous_day'}
+   */
+}
