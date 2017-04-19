@@ -273,7 +273,6 @@ class Calendar extends Component {
     this.setState({
       currentHour: event.target.value
     },function(){
-        debugger;
         this.props.changeHour(this.state.currentHour);
     });
   }
