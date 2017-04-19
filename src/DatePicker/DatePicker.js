@@ -221,7 +221,7 @@ class DatePicker extends Component {
     if (this.props.onChange) {
       var selectedCompareValue = this.state.selectedCompareValue;
       if(!selectedCompareValue){
-        selectedCompareValue = !this.props.compareValues || !this.props.compareValues.length  ? null : this.this.props.compareValues[0].value;
+        selectedCompareValue = !this.props.compareValues || !this.props.compareValues.length  ? null : this.props.compareValues[0].value;
       }
       this.setState({selectedCompareValue:selectedCompareValue},function(){
         this.props.onChange(null, date,this.state.selectedCompareValue,this.state.currentHour);
