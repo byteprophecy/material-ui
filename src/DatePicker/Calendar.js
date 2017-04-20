@@ -27,7 +27,7 @@ import {
 } from './dateUtils';
 
 
-const hoursString = 
+const hoursString =
 ['12:00 AM - 01:00 AM',
  '01:00 AM - 02:00 AM',
  '02:00 AM - 03:00 AM',
@@ -40,7 +40,7 @@ const hoursString =
  '09:00 AM - 10:00 AM',
  '10:00 AM - 11:00 AM',
  '11:00 AM - 12:00 PM',
-    // After Noon 
+    // After Noon
  '12:00 PM - 01:00 PM',
  '01:00 PM - 02:00 PM',
  '02:00 PM - 03:00 AM',
@@ -344,6 +344,8 @@ class Calendar extends Component {
       transitionSlide: {
         height: 214,
       },
+      selectHeading :{float:'left',width:'30%',lineHeight:'30px'},
+      selectBox: {marginLeft:'10px',fontSize:'12px',padding:'3px 0'}
     };
 
     const weekTitleDayStyle = prepareStyles(styles.weekTitleDay);
@@ -414,11 +416,11 @@ class Calendar extends Component {
             </div>
           }
           { this.props.granularity == 'Hourly' &&
-            <div style={{fontSize:'18px',fontFamily:'Bariol-Light',
+            <div style={{fontSize:'14px',fontFamily:'Bariol-Light',
             'marginLeft':'15px'}}>
-              <div style={{float:'left',width:'30%'}}>Hours: </div>
+              <div style={styles.selectHeading}>Hours: </div>
               <div  style={{float:'left',width:'70%'}}>
-                <select  name={'timeSelector'} onChange={this.changeHour} style={{marginLeft:'10px'}}>
+                <select  name={'timeSelector'} onChange={this.changeHour} style={styles.selectBox}>
                     {
                       this.state.hours.map((item,index) => {
                         return(
@@ -437,11 +439,11 @@ class Calendar extends Component {
               </div>
           }
           {this.props.hasCompareDate &&
-            <div style={{fontSize:'18px',fontFamily:'Bariol-Light',
+            <div style={{fontSize:'14px',fontFamily:'Bariol-Light',
             'marginLeft':'15px'}}>
-              <div style={{float:'left',width:'30%'}}>Compare With:</div>
+              <div style={styles.selectHeading}>Compare With:</div>
               <div  style={{float:'left',width:'70%'}}>
-                <select  name={'comparedToRadio'} style={{marginLeft:'10px'}}
+                <select  name={'comparedToRadio'} style={styles.selectBox}
                    onChange={this.selectCompareValue} >
                    {
                     this.props.compareValues.map((item) => {
